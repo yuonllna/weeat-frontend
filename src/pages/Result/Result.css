@@ -1,3 +1,275 @@
-.result {
+.result-container {
+  background: white;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* 헤더 타이틀 */
+.header-title {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.ready-msg-image {
+  width: 336px;
+  height: auto;
+  max-width: 100%;
+}
+
+.header-title h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.highlight {
+  color: #FF6B35;
+}
+
+/* 레스토랑 리스트 */
+.restaurant-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 레스토랑 카드 */
+.restaurant-card {
+  background: #f8f8f8;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 이미지 플레이스홀더 */
+.image-placeholder {
+  height: 100px;
+  background: white;
+  border-radius: 22px 22px 0 0;
+}
+
+/* 레스토랑 정보 */
+.restaurant-info {
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.restaurant-details {
+  flex: 1;
+}
+
+.restaurant-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin: 0 0 4px 0;
+  text-align: left;
+}
+
+.restaurant-address {
+  font-size: 12px;
+  color: #999;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-align: left;
+  max-width: 200px;
+}
+
+/* 평점 섹션 */
+.rating-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rating-score {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+}
+
+.star {
+  font-size: 16px;
+  color: #ddd;
+}
+
+.star.filled {
+  color: #FF6B35;
+}
+
+.star.half {
+  color: #FF6B35;
+  opacity: 0.5;
+}
+
+.review-count {
+  font-size: 14px;
+  color: #999;
+}
+
+/* 서비스 정보 */
+.service-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  min-width: 80px;
+}
+
+.service-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.service-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.service-text {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* 하단 버튼 섹션 */
+.bottom-button-section {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.again-button {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.again-button:hover {
+  transform: translateY(-2px);
+}
+
+.button-image {
+  width: 300px;
+  height: auto;
+  display: block;
+}
+
+.button-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .result-container {
+    padding: 15px;
+  }
   
+  .restaurant-list {
+    max-width: 350px;
+  }
+  
+  .ready-msg-image {
+    width: 288px;
+  }
+  
+  .header-title h1 {
+    font-size: 20px;
+  }
+  
+  .restaurant-name {
+    font-size: 16px;
+  }
+  
+  .service-icon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .button-image {
+    width: 270px;
+  }
+  
+  .button-text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .result-container {
+    padding: 10px;
+  }
+  
+  .restaurant-list {
+    max-width: 320px;
+  }
+  
+  .ready-msg-image {
+    width: 240px;
+  }
+  
+  .header-title h1 {
+    font-size: 18px;
+  }
+  
+  .restaurant-info {
+    padding: 10px;
+  }
+  
+  .restaurant-name {
+    font-size: 15px;
+  }
+  
+  .restaurant-address {
+    font-size: 10px;
+    max-width: 160px;
+  }
+  
+  .service-icon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .button-image {
+    width: 240px;
+  }
+  
+  .button-text {
+    font-size: 14px;
+  }
 }
