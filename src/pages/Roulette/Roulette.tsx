@@ -5,7 +5,7 @@ import './Roulette.css';
 // SVG 파일들 import
 import logo from '../../assets/logo.svg';
 import character1 from '../../assets/character_1.svg';
-import button1 from '../../assets/button_1.svg';
+import button2 from '../../assets/button_2.svg';
 import push from '../../assets/push.svg';
 import sexyfood from '../../assets/sexyfood.svg';
 
@@ -44,7 +44,7 @@ const Roulette: React.FC = () => {
           onClick={handleSpinRoulette}
           disabled={isSpinning}
         >
-          <img src={button1} alt="오늘 뭐 먹지" className="button-image" />
+          <img src={button2} alt="오늘 뭐 먹지" className="button-image" />
           <span className="button-text">오늘 뭐 먹지</span>
         </button>
       </div>
