@@ -24,7 +24,7 @@
   border-radius: 50%;
   transition: background-color 0.2s ease;
   position: absolute;
-  left: 15px;
+  left: 5px;
   z-index: 10;
 }
 
@@ -51,7 +51,7 @@
 
 /* 히어로 섹션 */
 .hero-section {
-  height: 30vh;
+  height: 25vh;
   background: #8B0000;
   display: flex;
   align-items: center;
@@ -75,10 +75,10 @@
 .info-card {
   background: white;
   margin-top: -20px;
-  padding: 30px 20px;
+  padding: 30px;
   position: relative;
   z-index: 10;
-  min-height: 50vh;
+  min-height: 40vh;
 }
 
 .store-name {
@@ -92,7 +92,7 @@
 .store-address {
   font-size: 14px;
   color: #8D8D8D;
-  margin: 0 0 20px 0;
+  margin: 0 0 8px 0;
   line-height: 1.4;
   text-align: left;
 }
@@ -165,14 +165,14 @@
 
 /* 탭 컨텐츠 */
 .tab-content {
-  min-height: 200px;
+  min-height: 100px;
 }
 
 .detail-item {
   display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 20px;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 .detail-icon {
@@ -190,6 +190,11 @@
 .detail-text {
   font-size: 16px;
   color: #333;
+  text-align: left;
+  word-wrap: break-word;
+  word-break: break-all;
+  line-height: 1.4;
+  flex: 1;
 }
 
 .menu-tags {
@@ -214,18 +219,60 @@
   margin-top: 50px;
 }
 
+/* Notice 섹션 */
+.notice-section {
+  padding: 20px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notice-box {
+  background: #FFF6F2;
+  border-radius: 7px;
+  padding: 20px;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+}
+
+.notice-icon {
+  position: absolute;
+  top: -15px;
+  left: 50px;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.notice-text {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #000000;
+  margin: 0;
+  text-align: center;
+}
+
+.highlight-text {
+  color: #FF5600;
+}
+
 /* 액션 버튼 */
 .action-buttons {
   position: relative;
   padding: 20px;
   background: white;
-  border-top: 1px solid #eee;
   display: flex;
+  flex-direction: row;
   gap: 15px;
   margin-top: 20px;
   width: 100%;
-  justify-content: center; /* 버튼들을 가운데 정렬 */
-  align-items: center; /* 버튼을 세로 중앙 정렬 */
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: visible;
 }
 
 .action-button {
@@ -236,6 +283,7 @@
   padding: 0;
   transition: all 0.3s ease;
   min-width: 0;
+  flex-shrink: 1;
 }
 
   /* 480px 이하에서도 원본 크기 유지 */
@@ -251,36 +299,43 @@
   object-fit: cover; /* 이미지가 버튼 영역을 꽉 채우도록 */
 }
 
-/* 첫 번째 버튼 (내게 보내기) - 원본 크기 152x72px */
+/* 첫 번째 버튼 (내게 보내기) - 원본 크기 유지 */
 .action-button:first-child {
-  height: 72px;
+  height: auto;
+  width: auto;
+  flex-shrink: 1;
 }
 
 .action-button:first-child .button-image {
-  height: 72px;
-  object-fit: cover;
+  height: auto;
+  width: auto;
+  object-fit: contain;
 }
 
-/* 두 번째 버튼 (후기 작성하기) - 원본 크기 217x74px */
+/* 두 번째 버튼 (후기 작성하기) - 원본 크기 유지 */
 .action-button:last-child {
-  height: 74px;
+  height: auto;
+  width: auto;
+  flex-shrink: 1;
 }
 
 .action-button:last-child .button-image {
-  height: 74px;
-  object-fit: cover;
+  height: auto;
+  width: auto;
+  object-fit: contain;
 }
 
 /* 내게 보내기 버튼 텍스트 스타일 */
 .send-button .button-text {
-  color: #FF6B35;
-  font-weight: 500;
+  color: #FF5600 !important;
+  font-weight: 500 !important;
+  font-size: 18px !important;
 }
 
 /* 후기 작성하기 버튼 텍스트 스타일 */
 .review-button .button-text {
-  color: white;
-  font-weight: 500;
+  color: white !important;
+  font-weight: 500 !important;
 }
 
 .button-text {
@@ -344,6 +399,19 @@
     height: 32px;
   }
   
+  .notice-section {
+    padding: 15px;
+  }
+  
+  .notice-box {
+    padding: 15px;
+    max-width: 450px;
+  }
+  
+  .notice-text {
+    font-size: 13px;
+  }
+  
   .action-buttons {
     padding: 15px;
   }
@@ -369,7 +437,7 @@
   }
   
   .button-text {
-    font-size: 14px;
+    font-size: 17px !important;
   }
 }
 
@@ -426,6 +494,26 @@
     font-size: 13px;
   }
   
+  .notice-section {
+    padding: 10px;
+  }
+  
+  .notice-box {
+    padding: 12px;
+    max-width: 400px;
+  }
+  
+  .notice-text {
+    font-size: 12px;
+  }
+  
+  .notice-icon {
+    width: 64px;
+    height: 50px;
+    top: -10px;
+    left: 30px;
+  }
+  
   /* 내게 보내기 버튼 텍스트 스타일 */
   .send-button .button-text {
     color: #FF6B35;
@@ -439,26 +527,72 @@
   }
   
   .action-buttons {
-    /* 480px 이하에서 최대 높이 조정 */
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   
-  .action-button {
-    /* flex 비율 유지 */
-  }
-  
-  /* 첫 번째 버튼 (내게 보내기) - 원본 비율 152:72 유지 */
   .action-button:first-child {
-    flex: 152;
+    max-width: 37%;
+    flex-shrink: 1;
   }
   
-  /* 두 번째 버튼 (후기 작성하기) - 원본 비율 217:74 유지 */
   .action-button:last-child {
-    flex: 217;
+    max-width: 55%;
+    flex-shrink: 1;
   }
   
-  /* 480px 이하에서도 원본 크기 유지 */
+  .action-button .button-image {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+  }
   
   .button-text {
-    font-size: 13px;
+    font-size: 17px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .notice-icon {
+    width: 48px;
+    height: 48px;
+    top: -8px;
+    left: 20px;
+  }
+  
+  .notice-text {
+    font-size: 11px;
+  }
+  
+  .button-text {
+    font-size: 13px !important;
+  }
+  
+  .send-button .button-text {
+    font-size: 13px !important;
+  }
+  
+  .action-buttons {
+    padding: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .action-button:first-child {
+    max-width: 35%;
+    flex-shrink: 1;
+  }
+  
+  .action-button:last-child {
+    max-width: 52%;
+    flex-shrink: 1;
+  }
+  
+  .action-button .button-image {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
   }
 }
