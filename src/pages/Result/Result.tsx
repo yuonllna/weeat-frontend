@@ -11,8 +11,6 @@ import dist from '../../assets/dist.svg';
 import budget from '../../assets/budget.svg';
 import filledStar from '../../assets/filledstar.svg';
 import star from '../../assets/star.svg';
-import button3 from '../../assets/button_3.svg';
-import button4 from '../../assets/button_4.svg';
 
 
 // 가게 데이터 타입 정의
@@ -263,15 +261,11 @@ const Result: React.FC = () => {
         ))}
       </div>
 
-      {/* 액션 버튼 */}
-      <div className="action-buttons">
-        <button className="action-button refresh-button" onClick={handleRefresh}>
-          <img src={button3} alt="다시!" className="button-image" />
-          <span className="button-text">다시!</span>
-        </button>
-        <button className="action-button send-button">
-          <img src={button4} alt="링크 보내기" className="button-image" />
-          <span className="button-text">링크 보내기</span>
+      {/* Result 페이지 전용 버튼 */}
+      <div className="result-button-container">
+        <button className="result-button refresh-button" onClick={handleRefresh}>
+          <img src={button2} alt="다시!!!" className="button-image" />
+          <span className="button-text">다시!!!</span>
         </button>
       </div>
     </div>

@@ -5,11 +5,19 @@ import filledStar from '../../assets/filledstar.svg';
 import star from '../../assets/star.svg';
 import button3 from '../../assets/button_3.svg';
 import button4 from '../../assets/button_4.svg';
+import notice from '../../assets/notice.svg';
 import categoryIcon from '../../assets/category.svg';
 import distIcon from '../../assets/dist.svg';
 import budgetIcon from '../../assets/budget.svg';
 import menuIcon from '../../assets/menu.svg';
 import './StoreDetail.css';
+
+// 카카오 SDK 타입 선언
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 interface PlaceDetail {
   id: number;
@@ -80,6 +88,63 @@ const StoreDetail: React.FC = () => {
 
   const handleGoBack = () => {
     navigate(-1);
+  };
+
+  const handleKakaoShare = () => {
+    try {
+      // 카카오 SDK가 로드되었는지 확인
+      if (typeof window !== 'undefined' && window.Kakao) {
+        // 카카오톡 공유 시도
+        shareToKakao();
+      } else {
+        // 카카오 SDK가 없는 경우 클립보드 복사
+        copyToClipboard();
+      }
+    } catch (error) {
+      console.error('공유 실패:', error);
+      // 에러 발생 시 클립보드 복사로 대체
+      copyToClipboard();
+    }
+  };
+
+  const shareToKakao = () => {
+    try {
+      // 사용자 정의 템플릿으로 카카오톡 공유
+      window.Kakao.Share.sendCustom({
+        templateId: 123925,
+        templateArgs: {
+          PLACE: place?.name || '가게명',
+          IMG: place?.hero_image_url || '',
+        },
+      });
+    } catch (error) {
+      console.error('카카오톡 공유 실패:', error);
+      // 카카오톡 공유 실패 시 클립보드 복사로 대체
+      copyToClipboard();
+    }
+  };
+
+  const copyToClipboard = async () => {
+    try {
+      const shareText = `${place?.name} - 위잇\n${place?.name}의 상세 정보를 확인해보세요!\n주소: ${place?.address}\n카테고리: ${place?.category}\n평점: ${place?.rating}점\n${window.location.href}`;
+      
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareText);
+        alert('링크가 클립보드에 복사되었습니다!');
+      } else {
+        // 구형 브라우저 지원
+        const textArea = document.createElement('textarea');
+        textArea.value = shareText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('링크가 클립보드에 복사되었습니다!');
+      }
+    } catch (error) {
+      console.error('클립보드 복사 실패:', error);
+      alert('공유에 실패했습니다. 링크를 직접 복사해주세요.');
+    }
   };
 
   const renderStars = (rating: number) => {
@@ -182,7 +247,7 @@ const StoreDetail: React.FC = () => {
               <div className="detail-icon">
                 <img src={budgetIcon} alt="예산" />
               </div>
-              <span className="detail-text">평균 {place.budget_range.toLocaleString()}원</span>
+              <span className="detail-text">평균 {place.budget_range}원</span>
             </div>
             <div className="detail-item">
               <div className="detail-icon">
@@ -211,11 +276,24 @@ const StoreDetail: React.FC = () => {
         )}
       </div>
 
+      {/* Notice 섹션 - 상세탭 활성화시에만 표시 */}
+      {activeTab === 'details' && (
+        <div className="notice-section">
+          <div className="notice-box">
+            <img src={notice} alt="알림" className="notice-icon" />
+            <p className="notice-text">
+              방문 후기 작성을 위해, 이 페이지를 꼭<br />
+              <span className="highlight-text">'내게 보내기'</span>로 카톡에 저장해주세요!
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* 액션 버튼 */}
       <div className="action-buttons">
-        <button className="action-button send-button">
-          <img src={button3} alt="링크 보내기" className="button-image" />
-          <span className="button-text">링크 보내기</span>
+        <button className="action-button send-button" onClick={handleKakaoShare}>
+          <img src={button3} alt="내게 보내기" className="button-image" />
+          <span className="button-text">내게 보내기</span>
         </button>
         <button className="action-button review-button">
           <img src={button4} alt="후기 작성하기" className="button-image" />

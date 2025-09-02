@@ -45,7 +45,7 @@ const Roulette: React.FC = () => {
           disabled={isSpinning}
         >
           <img src={button2} alt="오늘 뭐 먹지" className="button-image" />
-          <span className="button-text">오늘 뭐 먹지</span>
+          <span className="roulette-button-text">오늘 뭐 먹지</span>
         </button>
       </div>
 

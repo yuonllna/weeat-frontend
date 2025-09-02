@@ -16,7 +16,7 @@
 
 .back-button {
   position: absolute;
-  left: 20px;
+  left: 5px;
   background: none;
   border: none;
   cursor: pointer;
@@ -63,14 +63,13 @@
   background: white;
   border-radius: 22px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* 이미지 플레이스홀더 */
 .image-placeholder {
   height: 100px;
   background: white;
-  border-radius: 22px 22px 0 0;
+  border-radius: 18px 18px 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,26 +79,29 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 22px 22px 0 0;
+  border-radius: 18px 18px 4px 4px;
 }
 
 /* 레스토랑 정보 */
 .restaurant-info {
-  padding: 12px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  max-height: 115px;
 }
 
 .restaurant-details {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .restaurant-name {
   font-size: 24px;
   font-weight: bold;
   color: #333;
-  margin: 0 0 4px 0;
+  margin: 8px 0 4px 0;
   text-align: left;
 }
 
@@ -107,7 +109,7 @@
   font-size: 14px;
   color: #8D8D8D;
   margin: 0 0 8px 0;
-  line-height: 1.3;
+  line-height: 1.1;
   word-wrap: break-word;
   overflow-wrap: break-word;
   text-align: left;
@@ -118,8 +120,6 @@
 .rating-section {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 0px;
 }
 
 .rating-score {
@@ -168,6 +168,7 @@
 .service-info {
   display: flex;
   flex-direction: column;
+  margin-top: -10px;
   gap: 4px;
   align-items: flex-start;
   min-width: 80px;
@@ -196,77 +197,40 @@
 }
 
 /* 하단 버튼 섹션 */
-/* 액션 버튼 */
-.action-buttons {
-  position: relative;
-  padding: 20px;
-  background: white;
-  border-top: 1px solid #eee;
+/* Result 페이지 전용 버튼 */
+.result-button-container {
+  margin-top: 15px;
+  margin-bottom: 20px;
   display: flex;
-  gap: 15px;
-  margin-top: 20px;
-  width: 100%;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  box-sizing: border-box;
-  max-width: 100%;
-  overflow: hidden;
+  position: relative;
 }
 
-.action-button {
+.result-button {
   position: relative;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
   transition: all 0.3s ease;
-  min-width: 0;
-  flex-shrink: 0;
 }
 
-.action-button:hover {
-  transform: translateY(-2px);
+.result-button:hover {
+  transform: translateY(-5px);
 }
 
 .button-image {
-  width: 100%;
+  width: 450px;
   height: auto;
   display: block;
-  object-fit: cover;
-}
-
-/* 첫 번째 버튼 (다시!) - 원본 크기 152x72px */
-.action-button:first-child {
-  height: 72px;
-  flex: 152;
-}
-
-.action-button:first-child .button-image {
-  height: 72px;
-  object-fit: cover;
-}
-
-/* 두 번째 버튼 (링크 보내기) - 원본 크기 217x74px */
-.action-button:last-child {
-  height: 74px;
-  flex: 217;
-}
-
-.action-button:last-child .button-image {
-  height: 74px;
-  object-fit: cover;
 }
 
 /* 다시! 버튼 텍스트 스타일 */
 .refresh-button .button-text {
-  color: #FF6B35;
-  font-weight: 500;
-}
-
-/* 링크 보내기 버튼 텍스트 스타일 */
-.send-button .button-text {
-  color: white !important;
-  font-weight: 500;
+  color: #000000 !important;
+  font-weight: 400 !important;
+  font-size: 25px !important;
 }
 
 .button-text {
@@ -274,10 +238,13 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 15px;
+  color: white;
+  font-size: 25px !important;
+  font-weight: 350;
   text-align: center;
   pointer-events: none;
   z-index: 10;
+  white-space: nowrap;
 }
 
 /* 반응형 디자인 */
@@ -294,23 +261,23 @@
     width: 259px;
   }
   
-
-  
   .back-arrow {
     font-size: 20px;
   }
   
   .restaurant-name {
     font-size: 20px;
+    margin: 6px 0 3px 0;
+  }
+  
+  .restaurant-address {
+    font-size: 13px;
+    max-width: 200px;
   }
   
   .service-icon {
     width: 26px;
     height: 26px;
-  }
-  
-  .button-text {
-    font-size: 14px;
   }
 }
 
@@ -326,19 +293,18 @@
   .ready-msg-image {
     width: 216px;
   }
-  
 
-  
   .back-arrow {
     font-size: 20px;
   }
   
   .restaurant-info {
-    padding: 10px;
+    max-height: 110px;
   }
   
   .restaurant-name {
     font-size: 19px;
+    margin: 6px 0 3px 0;
   }
   
   .restaurant-address {
@@ -351,8 +317,9 @@
     height: 22px;
   }
   
-  .button-text {
-    font-size: 13px;
+  .refresh-button .button-text {
+    font-size: 22px !important;
+    font-weight: 400 !important;
   }
 }
 
@@ -365,6 +332,59 @@
   font-size: 18px;
   color: #666;
   text-align: center;
+}
+
+@media (max-width: 375px) {
+  .result-container {
+    padding: 12px;
+  }
+  
+  .restaurant-list {
+    max-width: 320px;
+    gap: 12px;
+  }
+  
+  .ready-msg-image {
+    width: 200px;
+  }
+  
+  .restaurant-info {
+    max-height: 110px;
+    padding: 8px;
+  }
+  
+  .restaurant-name {
+    font-size: 17px;
+    margin: 6px 0 3px 0;
+  }
+  
+  .restaurant-address {
+    font-size: 11px;
+    max-width: 170px;
+    line-height: 1.2;
+  }
+  
+  .service-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .service-text {
+    font-size: 12px;
+  }
+  
+  .rating-score {
+    font-size: 14px;
+  }
+  
+  .review-count {
+    font-size: 14px;
+  }
+  
+  .star-icon {
+    width: 14px;
+    height: 14px;
+  }
 }
 
 /* 에러 메시지 */

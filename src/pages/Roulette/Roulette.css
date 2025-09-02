@@ -89,14 +89,14 @@
     display: block;
   }
   
-  .button-text {
+  .roulette-button-text {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  color: #000000 !important;
   font-size: 25px !important;
-  font-weight: 350;
+  font-weight: 400 !important;
   text-align: center;
   pointer-events: none;
   z-index: 10;
@@ -151,25 +151,25 @@
     .character { width: 280px; }
     .sexy-food { width: 160px; right: -80px; }
     .button-image { width: 350px; }
-    .button-text { font-size: 23px !important; }
     .push-image { width: 160px; }
   }
   
   @media (max-width: 480px) {
-    .logo { width: 130px; }
-    .character { width: 240px; }
-    .sexy-food { width: 140px; right: -70px; }
-    .button-image { width: 280px; }
-    .button-text { font-size: 21px !important; }
-    .push-image { width: 120px; }
+  .logo { width: 130px; }
+  .character { width: 240px; }
+  .sexy-food { width: 140px; right: -70px; }
+  .button-image { width: 280px; }
+  .push-image { width: 120px; }
+  .roulette-button-text {
+    font-size: 23px !important;
   }
+}
   
   @media (max-width: 360px) {
     .logo { width: 110px; }
     .character { width: 200px; }
     .sexy-food { width: 120px; right: -60px; }
     .button-image { width: 240px; }
-    .button-text { font-size: 17px !important; }
     .push-image { width: 100px; }
   }
   
