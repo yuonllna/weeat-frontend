@@ -37,6 +37,16 @@ interface PlaceDetail {
   }>;
 }
 
+interface Review {
+  id: number;
+  place_id: number;
+  phone_number: string;
+  rating: number;
+  content: string;
+  created_at: string;
+  photo_urls: string; // JSON 문자열로 저장됨
+}
+
 const StoreDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -44,6 +54,9 @@ const StoreDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'details' | 'reviews'>('details');
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviewsLoading, setReviewsLoading] = useState(false);
+  const [reviewsError, setReviewsError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchPlaceDetail = async () => {
@@ -90,6 +103,63 @@ const StoreDetail: React.FC = () => {
     navigate(-1);
   };
 
+  const fetchReviews = async (placeId: string) => {
+    try {
+      setReviewsLoading(true);
+      setReviewsError(null);
+      const response = await fetch(`http://localhost:8000/api/v1/places/${placeId}/reviews`);
+      
+      if (!response.ok) {
+        throw new Error('후기를 가져오는데 실패했습니다.');
+      }
+      
+      const data = await response.json();
+      console.log('후기 데이터:', data);
+      // 최신순으로 정렬 (created_at 기준 내림차순)
+      const sortedReviews = data.sort((a: Review, b: Review) => 
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+      
+      // photo_urls JSON 문자열을 파싱하여 이미지 URL 배열로 변환
+      sortedReviews.forEach((review: any) => {
+        try {
+          if (review.photo_urls && typeof review.photo_urls === 'string') {
+            let cleanJsonString = review.photo_urls.trim();
+            
+            // Python 리스트 형태의 문자열을 JSON 형태로 변환
+            if (cleanJsonString.startsWith("['") && cleanJsonString.endsWith("']")) {
+              // "['url1', 'url2']" 형태를 "[\"url1\", \"url2\"]" 형태로 변환
+              cleanJsonString = cleanJsonString.replace(/'/g, '"');
+              review.parsed_photo_urls = JSON.parse(cleanJsonString);
+            } else if (cleanJsonString.startsWith('[') && cleanJsonString.endsWith(']')) {
+              // 이미 JSON 형태인 경우
+              review.parsed_photo_urls = JSON.parse(cleanJsonString);
+            } else {
+              // 단일 URL인 경우 배열로 감싸기
+              review.parsed_photo_urls = [cleanJsonString];
+            }
+          } else if (Array.isArray(review.photo_urls)) {
+            // 이미 배열인 경우
+            review.parsed_photo_urls = review.photo_urls;
+          } else {
+            review.parsed_photo_urls = [];
+          }
+        } catch (error) {
+          console.error('photo_urls 파싱 오류:', error, '원본 데이터:', review.photo_urls);
+          // 파싱 실패 시 빈 배열로 설정
+          review.parsed_photo_urls = [];
+        }
+      });
+      
+      setReviews(sortedReviews);
+    } catch (err) {
+      console.error('후기 API 호출 오류:', err);
+      setReviewsError(err instanceof Error ? err.message : '후기를 불러올 수 없습니다.');
+    } finally {
+      setReviewsLoading(false);
+    }
+  };
+
   const handleKakaoShare = () => {
     try {
       // 카카오 SDK가 로드되었는지 확인
@@ -115,6 +185,7 @@ const StoreDetail: React.FC = () => {
         templateArgs: {
           PLACE: place?.name || '가게명',
           IMG: place?.hero_image_url || '',
+          PLACE_ID: id || '1', // 가게 ID를 템플릿 인자로 전달
         },
       });
     } catch (error) {
@@ -149,17 +220,24 @@ const StoreDetail: React.FC = () => {
 
   const renderStars = (rating: number) => {
     const fullStars = Math.floor(rating); // 정수 부분만 추출
+    const hasHalfStar = rating % 1 >= 0.5; // 0.5 이상이면 반별 표시
     const stars = [];
     
     for (let i = 0; i < 5; i++) {
       if (i < fullStars) {
         stars.push(<img key={i} src={filledStar} alt="채워진 별" className="star filled" />);
+      } else if (i === fullStars && hasHalfStar) {
+        stars.push(<img key={i} src={filledStar} alt="반별" className="star half" />);
       } else {
         stars.push(<img key={i} src={star} alt="빈 별" className="star" />);
       }
     }
     
     return stars;
+  };
+
+  const getAnonymousName = (index: number, totalCount: number) => {
+    return `익명${totalCount - index}`;
   };
 
   if (loading) {
@@ -222,7 +300,12 @@ const StoreDetail: React.FC = () => {
           </button>
           <button 
             className={`tab ${activeTab === 'reviews' ? 'active' : ''}`}
-            onClick={() => setActiveTab('reviews')}
+            onClick={() => {
+              setActiveTab('reviews');
+              if (id && reviews.length === 0 && !reviewsLoading) {
+                fetchReviews(id);
+              }
+            }}
           >
             후기
           </button>
@@ -271,7 +354,73 @@ const StoreDetail: React.FC = () => {
 
         {activeTab === 'reviews' && (
           <div className="tab-content">
-            <p className="reviews-placeholder">후기 기능 준비 중입니다.</p>
+            {reviewsLoading ? (
+              <div className="reviews-loading">후기를 불러오는 중...</div>
+            ) : reviewsError ? (
+              <div className="reviews-error">{reviewsError}</div>
+            ) : reviews.length === 0 ? (
+              <div className="reviews-empty">아직 작성된 후기가 없습니다.</div>
+            ) : (
+              <div className="reviews-list">
+                {reviews.map((review, index) => (
+                  <div key={review.id} className="review-item">
+                    {/* 이름 (왼쪽 정렬, 18px) */}
+                    <div className="review-name">
+                      {getAnonymousName(index, reviews.length)}
+                    </div>
+                    
+                    {/* 별점과 날짜 (같은 줄) */}
+                    <div className="review-rating-date-row">
+                      <div className="review-rating-left">
+                        <span className="rating-number">{review.rating}</span>
+                        <div className="review-stars">
+                          {renderStars(review.rating)}
+                        </div>
+                      </div>
+                      <span className="review-date">
+                        {new Date(review.created_at).toLocaleDateString('ko-KR', {
+                          year: '2-digit',
+                          month: '2-digit',
+                          day: '2-digit'
+                        }).replace(/\./g, '.').replace(/\s/g, '')}
+                      </span>
+                    </div>
+                    
+                    {/* 사진 (가운데 정렬, 여러장이면 스와이프) */}
+                    {review.parsed_photo_urls && review.parsed_photo_urls.length > 0 && (
+                      <div className="review-images-container">
+                        <div className="review-images-scroll">
+                          {review.parsed_photo_urls.map((photoUrl, photoIndex) => {
+                            // 상대 경로인 경우 백엔드 서버 URL로 변환
+                            const fullImageUrl = photoUrl.startsWith('http') 
+                              ? photoUrl 
+                              : `http://localhost:8000${photoUrl}`;
+                            
+                            return (
+                              <img 
+                                key={photoIndex} 
+                                src={fullImageUrl} 
+                                alt={`리뷰 이미지 ${photoIndex + 1}`} 
+                                className="review-image"
+                                onError={(e) => {
+                                  console.error('이미지 로딩 실패:', fullImageUrl);
+                                  e.currentTarget.style.display = 'none';
+                                }}
+                              />
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* 리뷰 내용 (양쪽 정렬, 16px) */}
+                    <div className="review-content">
+                      {review.content}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -295,7 +444,10 @@ const StoreDetail: React.FC = () => {
           <img src={button3} alt="내게 보내기" className="button-image" />
           <span className="button-text">내게 보내기</span>
         </button>
-        <button className="action-button review-button">
+        <button 
+          className="action-button review-button"
+          onClick={() => navigate(`/review-write/${id}`)}
+        >
           <img src={button4} alt="후기 작성하기" className="button-image" />
           <span className="button-text">후기 작성하기</span>
         </button>
