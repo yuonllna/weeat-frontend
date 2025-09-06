@@ -223,7 +223,15 @@ const Result: React.FC = () => {
           >
             <div className="image-placeholder">
               {restaurant.place.hero_image_url && (
-                <img src={restaurant.place.hero_image_url} alt={restaurant.place.name} className="restaurant-image" />
+                <img 
+                  src={restaurant.place.hero_image_url} 
+                  alt={restaurant.place.name} 
+                  className="restaurant-image"
+                  onError={(e) => {
+                    console.error('히어로 이미지 로딩 실패:', restaurant.place.hero_image_url);
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
               )}
             </div>
             <div className="restaurant-info">
