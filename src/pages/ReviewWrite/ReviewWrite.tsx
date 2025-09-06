@@ -45,7 +45,7 @@ const ReviewWrite: React.FC = () => {
         }
         
         console.log('요청할 가게 ID:', placeId);
-        const response = await fetch(`https://api.weeat.site/api/v1/places/${placeId}`);
+        const response = await fetch(`http://43.202.164.138:8000/api/v1/places/${placeId}`);
         
         if (!response.ok) {
           throw new Error('가게 정보를 가져오는데 실패했습니다.');
@@ -177,7 +177,7 @@ const ReviewWrite: React.FC = () => {
         imageCount: selectedImages.length
       });
       
-      const response = await fetch(`https://api.weeat.site/api/v1/places/${id}/reviews`, {
+      const response = await fetch(`http://43.202.164.138:8000/api/v1/places/${id}/reviews`, {
         method: 'POST',
         body: formData,
       });
