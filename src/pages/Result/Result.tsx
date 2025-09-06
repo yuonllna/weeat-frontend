@@ -46,7 +46,7 @@ const Result: React.FC = () => {
     const fetchRecommendations = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:8000/api/v1/recommendations');
+        const response = await fetch('http://43.202.164.138:8000/api/v1/recommendations');
         
         if (!response.ok) {
           throw new Error('추천 데이터를 가져오는데 실패했습니다.');
@@ -143,7 +143,7 @@ const Result: React.FC = () => {
     
     const fetchRecommendations = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/v1/recommendations');
+        const response = await fetch('http://43.202.164.138:8000/api/v1/recommendations');
         
         if (!response.ok) {
           throw new Error('추천 데이터를 가져오는데 실패했습니다.');
