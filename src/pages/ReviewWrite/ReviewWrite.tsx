@@ -333,21 +333,21 @@ const ReviewWrite: React.FC = () => {
           onChange={handlePhoneNumberChange}
           maxLength={13}
         />
-      </div>
-
-      {/* 뒤로 가기 / 후기 등록하기 버튼 */}
-      <div className="bottom-section">
-        {isFormComplete() ? (
-          <button className="submit-review-button" onClick={handleSubmitReview}>
-            <img src={button6} alt="후기 등록하기" className="button-image" />
-            <span className="button-text">후기 등록하기</span>
-          </button>
-        ) : (
-          <button className="go-back-button" onClick={handleGoBack}>
-            <img src={button5} alt="뒤로 가기" className="button-image" />
-            <span className="button-text">뒤로 가기</span>
-          </button>
-        )}
+        
+        {/* 뒤로 가기 / 후기 등록하기 버튼 */}
+        <div className="button-section">
+          {isFormComplete() ? (
+            <button className="submit-review-button" onClick={handleSubmitReview}>
+              <img src={button6} alt="후기 등록하기" className="button-image" />
+              <span className="button-text">후기 등록하기</span>
+            </button>
+          ) : (
+            <button className="go-back-button" onClick={handleGoBack}>
+              <img src={button5} alt="뒤로 가기" className="button-image" />
+              <span className="button-text">뒤로 가기</span>
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

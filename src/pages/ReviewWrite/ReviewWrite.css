@@ -438,13 +438,10 @@
   border-color: #FF5600;
 }
 
-/* 뒤로 가기 버튼 */
-.bottom-section {
-  padding: 20px 20px 30px 20px;
-  position: sticky;
-  bottom: 0;
-  background: white;
-  border-top: 1px solid #eee;
+/* 버튼 섹션 */
+.button-section {
+  margin-top: 20px;
+  padding: 0 20px;
 }
 
 .go-back-button {
@@ -650,8 +647,9 @@
     font-size: 14px;
   }
   
-  .bottom-section {
-    padding: 15px 15px 25px 15px;
+  .button-section {
+    margin-top: 15px;
+    padding: 0 15px;
   }
   
   .go-back-button,
@@ -662,9 +660,5 @@
   
   .button-image {
     max-width: 300px;
-  }
-  
-  .bottom-section {
-    padding: 15px 15px 20px 15px;
   }
 }
