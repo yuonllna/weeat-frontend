@@ -5,8 +5,6 @@ import filledStar from '../../assets/filledstar.svg';
 import star from '../../assets/star.svg';
 import addIcon from '../../assets/add.svg';
 import noticeIcon from '../../assets/notice_none.svg';
-import button5 from '../../assets/button_5.svg';
-import button6 from '../../assets/button_6.svg';
 import './ReviewWrite.css';
 
 interface PlaceDetail {
@@ -338,13 +336,11 @@ const ReviewWrite: React.FC = () => {
         <div className="button-section">
           {isFormComplete() ? (
             <button className="submit-review-button" onClick={handleSubmitReview}>
-              <img src={button6} alt="후기 등록하기" className="button-image" />
-              <span className="button-text">후기 등록하기</span>
+              후기 등록하기
             </button>
           ) : (
             <button className="go-back-button" onClick={handleGoBack}>
-              <img src={button5} alt="뒤로 가기" className="button-image" />
-              <span className="button-text">뒤로 가기</span>
+              뒤로 가기
             </button>
           )}
         </div>

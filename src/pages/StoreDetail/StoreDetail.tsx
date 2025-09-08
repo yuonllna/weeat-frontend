@@ -58,6 +58,11 @@ const StoreDetail: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [reviewsLoading, setReviewsLoading] = useState(false);
   const [reviewsError, setReviewsError] = useState<string | null>(null);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentReviewImages, setCurrentReviewImages] = useState<string[]>([]);
+  const [touchStartX, setTouchStartX] = useState(0);
+  const [touchEndX, setTouchEndX] = useState(0);
 
   useEffect(() => {
     const fetchPlaceDetail = async () => {
@@ -241,6 +246,92 @@ const StoreDetail: React.FC = () => {
     return `익명${totalCount - index}`;
   };
 
+  // 이미지 모달 관련 함수들
+  const openImageModal = (images: string[], startIndex: number = 0) => {
+    setCurrentReviewImages(images);
+    setCurrentImageIndex(startIndex);
+    setIsImageModalOpen(true);
+  };
+
+  const closeImageModal = () => {
+    setIsImageModalOpen(false);
+  };
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % currentReviewImages.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + currentReviewImages.length) % currentReviewImages.length);
+  };
+
+  // 키보드 이벤트 핸들러
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (!isImageModalOpen) return;
+    
+    if (event.key === 'Escape') {
+      closeImageModal();
+    } else if (event.key === 'ArrowLeft') {
+      prevImage();
+    } else if (event.key === 'ArrowRight') {
+      nextImage();
+    }
+  };
+
+  // 터치/마우스 드래그 이벤트 핸들러
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    
+    const distance = touchStartX - touchEndX;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe && currentReviewImages.length > 1) {
+      nextImage();
+    }
+    if (isRightSwipe && currentReviewImages.length > 1) {
+      prevImage();
+    }
+  };
+
+  // 마우스 드래그 이벤트 핸들러
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setTouchStartX(e.clientX);
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    setTouchEndX(e.clientX);
+    
+    if (!touchStartX || !touchEndX) return;
+    
+    const distance = touchStartX - touchEndX;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe && currentReviewImages.length > 1) {
+      nextImage();
+    }
+    if (isRightSwipe && currentReviewImages.length > 1) {
+      prevImage();
+    }
+  };
+
+  // 키보드 이벤트 리스너 등록
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isImageModalOpen, currentReviewImages.length]);
+
   if (loading) {
     return (
       <div className="store-detail-container">
@@ -415,6 +506,7 @@ const StoreDetail: React.FC = () => {
                                 src={fullImageUrl} 
                                 alt={`리뷰 이미지 ${photoIndex + 1}`} 
                                 className="review-image"
+                                onClick={() => openImageModal(review.parsed_photo_urls!, photoIndex)}
                                 onError={(e) => {
                                   console.error('이미지 로딩 실패:', fullImageUrl);
                                   e.currentTarget.style.display = 'none';
@@ -465,6 +557,48 @@ const StoreDetail: React.FC = () => {
           <span className="button-text">후기 작성하기</span>
         </button>
       </div>
+
+      {/* 이미지 모달 */}
+      {isImageModalOpen && (
+        <div className="image-modal-overlay" onClick={closeImageModal}>
+          <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
+            {/* 닫기 버튼 */}
+            <button className="modal-close-btn" onClick={closeImageModal}>
+              ×
+            </button>
+            
+            {/* 이미지 */}
+            <div 
+              className="modal-image-container"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+            >
+              <img 
+                src={currentReviewImages[currentImageIndex]} 
+                alt={`이미지 ${currentImageIndex + 1}`}
+                className="modal-image"
+                draggable={false}
+              />
+            </div>
+            
+            {/* 이미지 인디케이터 (여러 장일 때만 표시) */}
+            {currentReviewImages.length > 1 && (
+              <div className="modal-indicators">
+                {currentReviewImages.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`modal-indicator ${index === currentImageIndex ? 'active' : ''}`}
+                    onClick={() => setCurrentImageIndex(index)}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

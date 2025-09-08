@@ -118,9 +118,9 @@
   gap: 2px;
 }
 
-.star {
-  width: 20px;
-  height: 20px;
+.store-detail-container .star {
+  width: 20px !important;
+  height: 20px !important;
 }
 
 .review-count {
@@ -283,9 +283,9 @@
   gap: 2px;
 }
 
-.review-stars .star {
-  width: 18px;
-  height: 18px;
+.store-detail-container .review-stars .star {
+  width: 18px !important;
+  height: 18px !important;
 }
 
 .review-date {
@@ -326,6 +326,12 @@
   border-radius: 8px;
   flex-shrink: 0;
   scroll-snap-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.review-image:hover {
+  transform: scale(1.02);
 }
 
 /* 리뷰 내용 (양쪽 정렬, 16px) */
@@ -486,8 +492,117 @@
   margin: 10px 0;
 }
 
+/* 이미지 모달 스타일 */
+.image-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.image-modal-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  font-size: 30px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  transition: background-color 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.modal-image-container {
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+
+.modal-indicators {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 1001;
+}
+
+.modal-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modal-indicator.active {
+  background: white;
+}
+
 /* 반응형 디자인 */
 @media (max-width: 768px) {
+  .modal-close-btn {
+    top: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    font-size: 25px;
+  }
+  
+  .modal-indicators {
+    bottom: 20px;
+  }
+}
   .header-title {
     font-size: 16px;
   }
@@ -508,9 +623,9 @@
     font-size: 15px;
   }
   
-  .star {
-    width: 18px;
-    height: 18px;
+  .store-detail-container .star {
+    width: 18px !important;
+    height: 18px !important;
   }
   
   .detail-icon {
@@ -590,9 +705,9 @@
     font-size: 14px;
   }
   
-  .star {
-    width: 16px;
-    height: 16px;
+  .store-detail-container .star {
+    width: 16px !important;
+    height: 16px !important;
   }
   
   .detail-icon {
@@ -690,9 +805,9 @@
     font-size: 15px;
   }
   
-  .review-stars .star {
-    width: 16px;
-    height: 16px;
+  .store-detail-container .review-stars .star {
+    width: 16px !important;
+    height: 16px !important;
   }
   
   /* 모바일에서 사진 크기 조정 */
