@@ -46,6 +46,16 @@ const Result: React.FC = () => {
     const fetchRecommendations = async () => {
       try {
         setLoading(true);
+        
+        // sessionStorage에서 기존 데이터 확인
+        const cachedData = sessionStorage.getItem('restaurantRecommendations');
+        if (cachedData) {
+          console.log('캐시된 데이터 사용:', JSON.parse(cachedData));
+          setRestaurants(JSON.parse(cachedData));
+          setLoading(false);
+          return;
+        }
+        
         const response = await fetch('http://43.202.164.138:8000/api/v1/recommendations');
         
         if (!response.ok) {
@@ -56,6 +66,9 @@ const Result: React.FC = () => {
         console.log('API 응답 데이터:', data); // 디버깅용 로그 추가
         console.log('첫 번째 가게 데이터:', data[0]); // 첫 번째 가게의 상세 구조 확인
         console.log('첫 번째 가게의 review_count:', data[0]?.place?.review_count); // review_count 값 확인
+        
+        // 데이터를 sessionStorage에 저장
+        sessionStorage.setItem('restaurantRecommendations', JSON.stringify(data));
         setRestaurants(data);
       } catch (err) {
         console.error('API 호출 오류:', err);
@@ -141,6 +154,9 @@ const Result: React.FC = () => {
     setLoading(true);
     setError(null);
     
+    // 캐시된 데이터 삭제
+    sessionStorage.removeItem('restaurantRecommendations');
+    
     const fetchRecommendations = async () => {
       try {
         const response = await fetch('http://43.202.164.138:8000/api/v1/recommendations');
@@ -151,6 +167,9 @@ const Result: React.FC = () => {
         
         const data = await response.json();
         console.log('새로운 API 응답 데이터:', data);
+        
+        // 새로운 데이터를 sessionStorage에 저장
+        sessionStorage.setItem('restaurantRecommendations', JSON.stringify(data));
         setRestaurants(data);
       } catch (err) {
         console.error('API 호출 오류:', err);

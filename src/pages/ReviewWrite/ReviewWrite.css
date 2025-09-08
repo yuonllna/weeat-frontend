@@ -68,7 +68,7 @@
 
 .review-write-container .restaurant-name {
   font-size: 26px;
-  font-weight: bold;
+  font-weight: 600;
   color: #151515;
   margin: 0 0 8px 0;
   text-align: left !important;
@@ -87,6 +87,7 @@
   display: block !important;
   word-break: normal !important;
   word-wrap: normal !important;
+  font-weight: 300 !important;
 }
 
 /* 리뷰 입력 섹션 */
@@ -101,6 +102,7 @@
   color: #151515;
   margin: 0 0 20px 0;
   text-align: center;
+  font-weight: 500 !important;
 }
 
 .rating-prompt .highlight {
@@ -110,14 +112,14 @@
 /* 별점 */
 .star-rating {
   display: flex;
-  gap: 8px;
+  gap: 2px;
   margin-bottom: 30px;
   justify-content: center;
 }
 
 .star {
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
@@ -400,7 +402,7 @@
 }
 
 .notice-text {
-  font-size: 14px;
+  font-size: 14px !important;
   color: #151515;
   line-height: 1.5;
   margin: 0;
@@ -409,7 +411,8 @@
 
 .notice-highlight {
   color: #FF5600;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .phone-input {
@@ -520,8 +523,8 @@
   }
   
   .star {
-    width: 28px;
-    height: 28px;
+    width: 38px;
+    height: 38px;
   }
   
   .photo-upload-area {
@@ -549,6 +552,11 @@
   
   .notice-text {
     font-size: 13px;
+  }
+  
+  .notice-highlight {
+    font-size: 14px;
+    font-weight: 600;
   }
   
   .phone-input {
@@ -590,13 +598,13 @@
   }
   
   .star-rating {
-    gap: 6px;
+    gap: 2px;
     margin-bottom: 25px;
   }
   
   .star {
-    width: 24px;
-    height: 24px;
+    width: 38px;
+    height: 38px;
   }
   
   .photo-upload-area {
@@ -640,6 +648,11 @@
   
   .notice-text {
     font-size: 12px;
+  }
+  
+  .notice-highlight {
+    font-size: 14px;
+    font-weight: 600;
   }
   
   .phone-input {
