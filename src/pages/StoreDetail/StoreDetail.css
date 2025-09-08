@@ -83,7 +83,7 @@
 
 .store-name {
   font-size: 26px;
-  font-weight: bold;
+  font-weight: 600;
   color: #151515;
   margin: 0 0 8px 0;
   text-align: left;
@@ -95,6 +95,7 @@
   margin: 0 0 8px 0;
   line-height: 1.4;
   text-align: left;
+  font-weight: 300;
 }
 
 /* 평점 섹션 */
@@ -108,7 +109,7 @@
 
 .rating-score {
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
   color: #151515;
 }
 
@@ -125,6 +126,7 @@
 .review-count {
   font-size: 16px;
   color: #969696;
+  font-weight: 500;
 }
 
 /* 탭 인터페이스 */
@@ -146,6 +148,7 @@
   transition: color 0.2s ease;
   flex: 1;
   text-align: center;
+  font-weight: 500;
 }
 
 .tab.active {
@@ -195,6 +198,7 @@
   word-break: break-all;
   line-height: 1.4;
   flex: 1;
+  font-weight: 400;
 }
 
 .menu-tags {
@@ -363,8 +367,8 @@
 }
 
 .notice-text {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   line-height: 1.5;
   color: #151515;
   margin: 0;
@@ -525,7 +529,7 @@
   }
   
   .notice-text {
-    font-size: 13px;
+    font-size: 15px !important;
   }
   
   .action-buttons {
@@ -621,14 +625,15 @@
   }
   
   .notice-text {
-    font-size: 12px;
+    font-size: 15px !important;
+    font-weight: 600;
   }
   
   .notice-icon {
     width: 60px;
     height: 50px;
-    top: -15px;
-    left: 15px;
+    top: -33px !important;
+    left: 8px !important;
   }
   
   /* 내게 보내기 버튼 텍스트 스타일 */
