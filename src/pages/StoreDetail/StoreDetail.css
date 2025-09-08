@@ -133,8 +133,8 @@
 .tabs {
   display: flex;
   border-bottom: 1px solid #eee;
-  margin-bottom: 25px;
-  width: 100%;
+  margin: 0 -30px 25px -30px;
+  width: calc(100% + 60px);
 }
 
 .tab {
@@ -154,16 +154,8 @@
 .tab.active {
   color: #151515;
   font-weight: 500;
-}
-
-.tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #FF967C;
+  border-bottom: 2px solid #FF967C;
+  margin-bottom: -1px;
 }
 
 /* 탭 컨텐츠 */
@@ -506,6 +498,10 @@
   z-index: 1000;
   padding: 20px;
   box-sizing: border-box;
+  /* 터치 스크롤 방지 */
+  touch-action: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .image-modal-content {
@@ -550,6 +546,8 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  /* 이미지 컨테이너에서만 터치 액션 허용 */
+  touch-action: pan-x;
 }
 
 .modal-image {
@@ -602,7 +600,7 @@
   .modal-indicators {
     bottom: 20px;
   }
-}
+  
   .header-title {
     font-size: 16px;
   }
@@ -650,12 +648,6 @@
   .action-buttons {
     padding: 15px;
   }
-  
-  .action-button {
-    /* flex 비율 유지 */
-  }
-  
-  /* 768px 이하에서도 원본 크기 유지 */
   
   /* 768px 이하에서도 원본 크기 유지 */
   

@@ -251,10 +251,14 @@ const StoreDetail: React.FC = () => {
     setCurrentReviewImages(images);
     setCurrentImageIndex(startIndex);
     setIsImageModalOpen(true);
+    // 모달이 열릴 때 body 스크롤 비활성화
+    document.body.style.overflow = 'hidden';
   };
 
   const closeImageModal = () => {
     setIsImageModalOpen(false);
+    // 모달이 닫힐 때 body 스크롤 재활성화
+    document.body.style.overflow = 'unset';
   };
 
   const nextImage = () => {
@@ -331,6 +335,13 @@ const StoreDetail: React.FC = () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isImageModalOpen, currentReviewImages.length]);
+
+  // 컴포넌트 언마운트 시 스크롤 복원
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   if (loading) {
     return (
@@ -560,8 +571,8 @@ const StoreDetail: React.FC = () => {
 
       {/* 이미지 모달 */}
       {isImageModalOpen && (
-        <div className="image-modal-overlay" onClick={closeImageModal}>
-          <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="image-modal-overlay">
+          <div className="image-modal-content">
             {/* 닫기 버튼 */}
             <button className="modal-close-btn" onClick={closeImageModal}>
               ×
