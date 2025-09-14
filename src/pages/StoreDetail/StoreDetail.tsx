@@ -68,7 +68,7 @@ const StoreDetail: React.FC = () => {
     const fetchPlaceDetail = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://43.202.164.138:8000/api/v1/places/${id}`);
+        const response = await fetch(`http://16.184.23.176:8000/api/v1/places/${id}`);
         
         if (!response.ok) {
           throw new Error('가게 정보를 가져오는데 실패했습니다.');
@@ -113,7 +113,7 @@ const StoreDetail: React.FC = () => {
     try {
       setReviewsLoading(true);
       setReviewsError(null);
-      const response = await fetch(`http://43.202.164.138:8000/api/v1/places/${placeId}/reviews`);
+      const response = await fetch(`http://16.184.23.176:8000/api/v1/places/${placeId}/reviews`);
       
       if (!response.ok) {
         throw new Error('후기를 가져오는데 실패했습니다.');
@@ -502,13 +502,13 @@ const StoreDetail: React.FC = () => {
                                fullImageUrl = photoUrl;
                              } else if (photoUrl.startsWith('/static/uploads/')) {
                                // 로컬 경로를 API 도메인으로 변환
-                               fullImageUrl = `http://43.202.164.138:8000${photoUrl}`;
+                               fullImageUrl = `http://16.184.23.176:8000${photoUrl}`;
                              } else if (photoUrl.startsWith('static/uploads/')) {
                                // static/uploads/로 시작하는 경우
-                               fullImageUrl = `http://43.202.164.138:8000/${photoUrl}`;
+                               fullImageUrl = `http://16.184.23.176:8000/${photoUrl}`;
                              } else {
                                // 기타 상대 경로인 경우 API 도메인으로 가정
-                               fullImageUrl = `http://43.202.164.138:8000/${photoUrl}`;
+                               fullImageUrl = `http://16.184.23.176:8000/${photoUrl}`;
                              }
                             
                             return (
